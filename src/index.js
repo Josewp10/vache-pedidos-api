@@ -17,6 +17,9 @@ app.get('/', (req,res) =>{
     res.send('API');
 });
 
+const ruta_pedidos = require('./libs/pedidos/routes/pedidos');
+app.use(ruta_pedidos);
+
 //routes
 
 //Port
