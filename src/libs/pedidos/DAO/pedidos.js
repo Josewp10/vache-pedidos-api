@@ -11,7 +11,7 @@ class PedidosDAO {
  * @returns
  */
 async consultarpedidos()  {    
-    let sql = `SELECT id_pedido, producto, precio, descripcion
+    let sql = `SELECT id_pedido, producto, precio, descripcion, id_cliente, fecha, direccion
 	FROM public."Pedidos";`;
     let respuesta = await _servicio.executeSQL(sql);
     return respuesta
@@ -24,7 +24,7 @@ async consultarpedidos()  {
  * @returns
  */
 async consultarpedido(id_pedido){   
-    let sql = `SELECT producto, precio, descripcion
+    let sql = `SELECT producto, precio, descripcion, id_cliente, fecha, direccion
     FROM public."Pedidos" where id_pedido=$1;`;
       
     let respuesta = await _servicio.executeSQL(sql, [id_pedido]);
@@ -38,9 +38,10 @@ async consultarpedido(id_pedido){
  * @returns 
  */
 async guardarpedido(pedido) {
-    let sql = `INSERT INTO public."Pedidos"(id_pedido, producto, precio, descripcion)
-                VALUES ($1, $2, $3, $4);`;
-    let valores = [pedido.id_pedido, pedido.producto,pedido.precio,pedido.descripcion];
+    let sql = `INSERT INTO public."Pedidos"( producto, precio, descripcion,id_cliente, fecha, direccion)
+                VALUES ($1, $2, $3, $4, $5, $6);`;
+    let valores = [ pedido.producto, pedido.precio, pedido.descripcion, pedido.id_cliente,
+      pedido.fecha, pedido.direccion ];
     let respuesta = await _servicio.executeSQL(sql, valores);
     return respuesta
 };
@@ -53,9 +54,10 @@ async guardarpedido(pedido) {
  async editarpedido (pedido)  {
     let sql =
       `UPDATE public."Pedidos"
-        SET   producto=$1, precio=$2, descripcion=$3
-        WHERE id_pedido = $4;`;
-    let valores = [ pedido.producto,pedido.precio,pedido.descripcion,pedido.id_pedido];
+        SET   producto=$1, precio=$2, descripcion=$3, id_cliente=$4, fecha=$5, direccion=$6
+        WHERE id_pedido = $7;`;
+    let valores = [ pedido.producto, pedido.precio, pedido.descripcion,  pedido.id_cliente,
+      pedido.fecha, pedido.direccion, pedido.id_pedido ];
      await _servicio.executeSQL(sql, valores);
    
   };
