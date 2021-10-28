@@ -35,6 +35,21 @@ class PedidosController {
             ok: false,
             mensaje: 'Ingrese la información del pedido'
         };
+    }else if(!pedido.id_cliente){
+        throw{
+            ok: false,
+            mensaje: 'Ingrese la información del pedido'
+        };
+    }else if(!pedido.fecha){
+        throw{
+            ok: false,
+            mensaje: 'Ingrese la información del pedido'
+        };
+    }else if(!pedido.direccion){
+        throw{
+            ok: false,
+            mensaje: 'Ingrese la información del pedido'
+        };
     }
 };
 
